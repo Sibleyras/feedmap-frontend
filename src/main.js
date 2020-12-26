@@ -1,8 +1,9 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
+import http from './http/http-common'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import http from './http-common'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/style.css'
@@ -12,12 +13,14 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-Vue.prototype.$http = http
-Vue.prototype.$iconsURL = 'http://localhost:8000/images/'
+Vue.prototype.$http = http['api'] // The axios object to make request to the backend API.
 
 Vue.config.productionTip = false
 
+const store = require('./store/index.js')(http['api'])
+
 new Vue({
+  store: store,
   router,
   render: h => h(App),
 }).$mount('#app')

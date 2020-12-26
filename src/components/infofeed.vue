@@ -1,64 +1,67 @@
 <template>
   <div>
-    <div class="row no-gutters border" v-for="info of infolist" :key="info.id">
-      <div class="p-1 mr-auto">
-        <img class="infoicon" :src="$iconsURL + info.marker + '.png'" />
-      </div>
-      <div class="infodate p-1">
-        <p> Il y a 2 jours</p>
-      </div>
-      <div class="col-12 p-1">
-        {{ info.description }}
-      </div>
-      <div class="col-12">
-        <img class="img-fluid imginfo" :src="info.image" />
-      </div>
-      <div class="infosrc row no-gutters overflow-hidden">
-        <a :href="info.source">{{info.source}}</a>
-      </div>
+    <div
+      v-for="info of infolist"
+      :key="info.getId()"
+      :id="'info' + info.getId()"
+      v-bind:class="{ target: targetinfo === info }"
+      v-on:click="setTarget(info)"
+      v-on:dblclick="buildeditor()"
+      class="row no-gutters border"
+    >
+      <displayinfo :info="info" />
     </div>
+    <b-modal size="xl" hide-footer hide-header id="editoverlay" body-bg-variant="light">
+      <div class="row justifify-content-around" style="align-items: flex-start;">
+        <div class="col-11 col-sm-6" style="background-color: white;">
+          <infoeditor :edit="true" :del="true" :info="targetinfo" />
+        </div>
+        <div class="d-none d-md-block col-md-1 col-lg-2" />
+        <div class="d-none d-sm-block col-6 col-md-5 col-lg-4 border" style="background-color: white;">
+          <displayinfo :info="targetinfo" />
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import displayinfo from '@/components/displayinfo.vue'
+import Infoeditor from '@/components/infoeditor.vue'
+import Displayinfo from './displayinfo.vue'
 export default {
   name: 'infofeed',
+  props: ['infolist'],
   data: () => ({
-    profile: true,
-    lastndays: 14,
-    infolist: [],
+    showedit: false,
   }),
-  computed: {},
-  components: {},
-  methods: {
-    /* eslint-disable no-console */
-    async retrieveInfos(days) {
-      try {
-        let response = await this.$http.get('/infos/days/' + days) //.then((response) => {
-        this.infolist = response.data
-        //})
-        //for (r of response) {
-        //  this.infolist.push(r)
-        //}
-        // this.infolist = await Vue.http.get('/infos/' + days).data
-      } catch (err) {
-        alert(err)
-        console.log(err)
-      }
+  computed: {
+    targetinfo() {
+      return this.$store.getters.targetinfo
     },
-    async refreshList() {
-      await this.retrieveInfos(this.lastndays)
-    },
-    /* eslint-enable no-console */
   },
-  async mounted() {
-    await this.refreshList()
+  methods: {
+    setTarget(info) {
+      this.$store.commit('setTarget', info)
+    },
+    buildeditor() {
+      if (this.$store.getters.editmode) this.$bvModal.show('editoverlay')
+    },
+  },
+  watch: {
+    targetinfo(setTarget, oldtarget) {
+      document.getElementById('info' + setTarget.getId()).scrollIntoView()
+    },
+  },
+  components: {
+    displayinfo,
+    Infoeditor,
   },
 }
 </script>
 
 <style scoped>
-.imginfo{
-  max-height: 75vh;
+.target {
+  background-color: lightcyan;
 }
 </style>
