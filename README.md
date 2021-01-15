@@ -1,4 +1,9 @@
-# vue.js-client
+# FrontEnd for the FeedMap project.
+
+A simple map with an editable feed to display information and locate them easily.
+
+Built with vue.js.
+Sister backend: https://github.com/Sibleyras/feedmap-backend
 
 ## Project setup
 ```
