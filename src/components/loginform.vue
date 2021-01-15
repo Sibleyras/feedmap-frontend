@@ -37,7 +37,7 @@ export default {
       }
       try {
         this.alert = await this.$store.dispatch('LogIn', data)
-        router.push(this.redirect)
+        if (!this.alert) router.push(this.redirect)
       } catch (err) {
         console.log('Cannot log in')
       }
