@@ -1,6 +1,7 @@
-//store/modules/auth.js
-module.exports = (http) => {
+//store/modules/info.js
+module.exports = (httpcommon) => {
   const Info = require('@/class/Info.js')
+  const http = httpcommon['api']
 
   const state = {
     targetinfo: null, // Info currently selected.
@@ -54,6 +55,9 @@ module.exports = (http) => {
       state.targetinfo = info
     },
     setMarkersURL(state, mURL) {
+      for (var marker in mURL) {
+        mURL[marker] = httpcommon['maker_URL'] + mURL[marker]
+      }
       state.markersURL = mURL
     },
     updtRetrieveTime(state) {

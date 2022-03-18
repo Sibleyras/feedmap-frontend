@@ -1,3 +1,5 @@
 export default {
-    apiURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8000/',
+    apiPath: 'api/',
+    markerPath: 'images/'
   }

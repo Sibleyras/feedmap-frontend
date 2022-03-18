@@ -28,7 +28,6 @@ class Info {
   }
 
   getLocation() {
-    // eslint-disable-next-line
     return [this.latitude, this.longitude]
   }
 

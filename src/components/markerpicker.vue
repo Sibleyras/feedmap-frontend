@@ -12,7 +12,6 @@
 <script>
 export default {
   name: 'markerpicker',
-  // eslint-disable-next-line
   props: ['info', 'done'],
   data: () => ({}),
   computed: {

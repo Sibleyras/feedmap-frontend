@@ -60,7 +60,6 @@ export default {
   // feedmode:  boolean control whether we print the feed or not.
   // infolist:  the list of information to be printed on the map.
   // mapdim:    the value we must watch before triggering a resize of the map.
-  // eslint-disable-next-line
   props: ['feedmode', 'infolist', 'mapdim'],
   data() {
     return {
@@ -79,7 +78,6 @@ export default {
 
       // set the style of icons.
       myMarkerIcon: L.Icon.extend({
-        /* eslint-disable */
         options: {
           iconSize: [70, 70], // size of the icon
           shadowSize: [50, 50], // size of the shadow
@@ -87,7 +85,6 @@ export default {
           shadowAnchor: [10, -35], // the same for the shadow
           popupAnchor: [15, -30], // point from which the popup should open relative to the iconAnchor
         },
-        /* eslint-enable */
       }),
 
       newinfo: new Info(

@@ -2,12 +2,12 @@
 // import Vuex from 'vuex'
 // import createPersistedState from 'vuex-persistedstate'
 
-module.exports = (http) => {
+module.exports = (httpcommon) => {
   const Vue = require('vue').default
   const Vuex = require('vuex').default
   const createPersistedState = require('vuex-persistedstate').default
-  const auth = require('./modules/auth.js')(http)
-  const info = require('./modules/info.js')(http)
+  const auth = require('./modules/auth.js')(httpcommon['api'])
+  const info = require('./modules/info.js')(httpcommon)
 
   // Load Vuex
   Vue.use(Vuex)
